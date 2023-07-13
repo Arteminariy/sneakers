@@ -1,20 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/entities/user.entity';
 import { AuthDto } from './dto/';
 import * as bcrypt from 'bcrypt';
 import { LogoutResponse, Tokens } from './interfaces';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
-import { MailService } from 'src/mail/mail.service';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User) private userRepository: typeof User,
+    private userRepository: Repository<User>,
     private userService: UsersService,
     private JWTService: JwtService,
-    private mailService: MailService,
   ) {}
 
   async signUpLocal(authDto: AuthDto): Promise<Tokens | HttpException> {
@@ -38,7 +36,7 @@ export class AuthService {
         );
       }
       if (newUser instanceof User) {
-        await this.mailService.sendActivationMail(authDto.email, newUser.id);
+        // await this.mailService.sendActivationMail(authDto.email, newUser.id);
         const tokens = await this.getTokens(newUser.id, newUser.email);
         await this.updateRTHash(newUser.id, tokens.refreshToken);
         return tokens;
@@ -92,14 +90,14 @@ export class AuthService {
 
   async logout(userId: string): Promise<LogoutResponse | HttpException> {
     try {
-      const user = await this.userRepository.findByPk(userId);
+      const user = await this.userRepository.findOneBy({ id: userId });
       if (!user) {
         return new HttpException(
           'Пользователь не найден',
           HttpStatus.NOT_FOUND,
         );
       }
-      await user.update({ hashedRT: null });
+      await this.userRepository.save(user);
       return { message: 'Выход из системы совершён успешно' };
     } catch (error) {
       return new HttpException(
@@ -115,7 +113,7 @@ export class AuthService {
     rt: string,
   ): Promise<Tokens | HttpException> {
     try {
-      const user = await this.userRepository.findByPk(userId);
+      const user = await this.userRepository.findOneBy({ id: userId });
       if (!user || !user.hashedRT) {
         return new HttpException(
           'Пользователь не найден',
@@ -147,8 +145,8 @@ export class AuthService {
 
   async updateRTHash(userId: string, rt: string): Promise<void> {
     const hash = await this.hashData(rt);
-    const user = await this.userRepository.findByPk(userId);
-    await user.update({ hashedRT: hash });
+    const user = await this.userRepository.findOneBy({ id: userId });
+    await this.userRepository.save({ ...user, hashedRT: hash });
   }
 
   async getTokens(userId: string, email: string): Promise<Tokens> {
