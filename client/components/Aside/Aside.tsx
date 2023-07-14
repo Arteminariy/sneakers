@@ -6,7 +6,7 @@ interface IAsideProps {}
 const Aside: FC<IAsideProps> = () => {
 	return (
 		<aside className={styles.aside}>
-			
+			aside
 		</aside>
 	)
 }
