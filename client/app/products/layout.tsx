@@ -2,7 +2,7 @@ import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import './globals.scss';
+import styles from './ProductsLayout.module.scss';
 import Aside from '@components/Aside/Aside';
 
 const inter = Roboto({
@@ -19,20 +19,15 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+export default function ProductsLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="ru">
-			<body className={inter.className}>
-				<Header />
-				<div className="container">
-					<main>{children}</main>
-				</div>
-				<Footer />
-			</body>
-		</html>
+		<div className={styles.container}>
+			<Aside />
+			<main>{children}</main>
+		</div>
 	);
 }
