@@ -27,12 +27,12 @@ export default function RootLayout({
 	return (
 		<html lang="ru">
 			<body className={inter.className}>
-				<Header />
 				<div className="container">
+					<Header />
 					<Aside />
 					<main>{children}</main>
+					<Footer />
 				</div>
-				<Footer />
 			</body>
 		</html>
 	);
