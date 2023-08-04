@@ -1,3 +1,6 @@
+@import "../styles/themes/light.scss";
+@import "../styles/themes/dark.scss";
+
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -6,8 +9,23 @@
 :root {
 	--shadow: 0px 0px 5px #8f8f8f;
 	--dark-shadow: 0px 0px 5px #535353;
+
+	// typography
+	--font-family-main: FortuneC, sans-serif;
+
+	--font-size-s: 16px;
+	--font-line-s: 24px;
+	--font-s: var(--font-size-s) / var(--font-line-s) var(--font-family-main);
+	--font-size-m: 24px;
+	--font-line-m: 32px;
+	--font-m: var(--font-size-s) / var(--font-line-s) var(--font-family-main);
+	--font-size-l: 32px;
+	--font-line-l: 40px;
+	--font-l: var(--font-size-s) / var(--font-line-s) var(--font-family-main);
 }
-.container {
-	max-width: 1600px;
-	margin: 0 auto;
+.app {
+	font: var(--font-m);
+	background-color: var(--bg-color);
+	color: var(--primary-color);
+	min-height: 100vh;
 }
