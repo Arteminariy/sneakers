@@ -3,7 +3,7 @@ import '../../app/globals.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-const AppComponent: FC<PropsWithChildren> = ({ children }) => {
+const AppLayout: FC<PropsWithChildren> = ({ children }) => {
 	
 	return (
 		<div className="app light">
@@ -16,4 +16,4 @@ const AppComponent: FC<PropsWithChildren> = ({ children }) => {
 	);
 };
 
-export default AppComponent;
+export default AppLayout;
