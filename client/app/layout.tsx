@@ -1,10 +1,14 @@
-import Footer from '@components/Footer/Footer';
-import Header from '@components/Header/Header';
 import type { Metadata } from 'next';
 import './globals.scss';
 import ThemeProvider from '@/theme/ThemeProvider';
 import AppComponent from '@/components/AppComponent/AppComponent';
+import { Inter } from 'next/font/google';
 
+const inter = Inter({
+	weight: '400',
+	subsets: ['latin', 'cyrillic-ext'],
+	display: 'swap',
+  })
 export const metadata: Metadata = {
 	title: 'Sneaker Shop',
 	description: 'A shop with sneakers',
@@ -21,10 +25,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="ru">
+		<html lang="ru" className={inter.className}>
 			<body>
 				<ThemeProvider>
-					<AppComponent/>
+					<AppComponent>{children}</AppComponent>
 				</ThemeProvider>
 			</body>
 		</html>

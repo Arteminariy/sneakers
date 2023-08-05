@@ -1,12 +1,14 @@
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import styles from './ProductsLayout.module.scss';
 import Aside from '@components/Aside/Aside';
 
-const inter = Roboto({
+const inter = Inter({
 	weight: '400',
+	subsets: ['latin', 'cyrillic-ext'],
+	display: 'swap',
 });
 
 export const metadata: Metadata = {
