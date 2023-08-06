@@ -9,6 +9,11 @@ const inter = Inter({
 	subsets: ['latin', 'cyrillic-ext'],
 	display: 'swap',
   })
+const inter = Inter({
+	weight: '400',
+	subsets: ['latin', 'cyrillic-ext'],
+	display: 'swap',
+  })
 export const metadata: Metadata = {
 	title: 'Sneaker Shop',
 	description: 'A shop with sneakers',
@@ -31,6 +36,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
+		<html lang="ru" className={inter.className}>
 		<html lang="ru" className={inter.className}>
 			<body>
 				<ThemeProvider>
